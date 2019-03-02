@@ -1,0 +1,20 @@
+version: '2.2'
+services:
+  queue:
+    image: "rabbitmq"
+    ports: 
+     - "1234:5674"
+  consumer:
+    build: 
+      context: .
+      dockerfile: consumerDockerfile
+    restart: always
+    depends_on: 
+     - queue 
+  producer:
+    build: 
+      context: .
+      dockerfile: producerDockerfile
+    restart: always
+    depends_on: 
+     - queue
