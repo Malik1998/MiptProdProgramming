@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</head>
+<body>
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <ul class="list-group">
+            {% for question in object_list %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">{{ question.question }}
+                <div class="pull-right row">
+                    <a href="/question/update/{{ question.pk }}/"><button class="btn btn-warning"  type="button"> Update </button></a>
+                    <form method="post" action="/question/delete/{{ question.pk }}/">{% csrf_token %}<button type="submit" class="btn btn-danger">Delete</button></form>
+                </div>
+            </li>
+            {% endfor %}
+    </ul>
+
+    <form method="post" action="/question/add/" >{% csrf_token %}
+        {{ createForm | crispy}}
+        <input type="submit" value="Send message" class="btn btn-success">
+    </form>
+
+
+{% endblock %}
+
+
+</body>
+</html>
